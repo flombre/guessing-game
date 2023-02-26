@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Guessing Game</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			text-align: center;
+		}
+		h1 {
+			font-size: 2rem;
+			margin-top: 2rem;
+		}
+		button {
+			margin: 1rem;
+			padding: 0.5rem 1rem;
+			border-radius: 0.25rem;
+			border: none;
+			background-color: #007bff;
+			color: #fff;
+			font-size: 1rem;
+			cursor: pointer;
+			transition: background-color 0.2s ease-in-out;
+		}
+		button:hover {
+			background-color: #0069d9;
+		}
+	</style>
+</head>
+<body>
+	<h1>Guess the number between 1 and 100</h1>
+	<input type="text" id="guess" placeholder="Enter your guess" autofocus>
+	<button id="submit">Submit</button>
+	<button id="reset">Reset</button>
+	<p id="result"></p>
+
+	<script>
+		// Generate a random number between 1 and 100
+		const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+		// Get DOM elements
+		const guessInput = document.getElementById('guess');
+		const submitButton = document.getElementById('submit');
+		const resetButton = document.getElementById('reset');
+		const resultElement = document.getElementById('result');
+
+		// Listen for submit button click
+		submitButton.addEventListener('click', function() {
+			const guess = parseInt(guessInput.value);
+			if (isNaN(guess) || guess < 1 || guess > 100) {
+				resultElement.textContent = 'Please enter a number between 1 and 100.';
+				resultElement.style.color = 'red';
+			} else if (guess === randomNumber) {
+				resultElement.textContent = 'Congratulations! You guessed the number.';
+				resultElement.style.color = 'green';
+				guessInput.disabled = true;
+				submitButton.disabled = true;
+			} else if (guess < randomNumber) {
+				resultElement.textContent = 'Too low. Guess again.';
+				resultElement.style.color = 'red';
+			} else {
+				resultElement.textContent = 'Too high. Guess again.';
+				resultElement.style.color = 'red';
+			}
+			guessInput.value = '';
+			guessInput.focus();
+		});
+
+		// Listen for reset button click
+		resetButton.addEventListener('click', function() {
+			location.reload();
+		});
+	</script>
+</body>
+</html>
